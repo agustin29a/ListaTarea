@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2> Lista de Tareas</h2>
+{% endblock %}
+
+{% block content %}
+<div class='container py-3'>
+    <div class="row">
+        <div class="col">
+            <form method="GET" method="." class="row">
+                <div class="row">
+                    <div class="col-4">
+                        <button class="btn btn-secondary" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            Nombre
+                        </button>
+                        <button class="btn btn-secondary" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
+                            Estado
+                        </button>
+                        <button class="btn btn-secondary" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
+                            Descripcion
+                        </button>
+                    </div>
+                    <div class="col-3">
+                        <button type="submit" class="btn btn-success">Buscar</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 collapse" id="collapseExample">
+                        <div class="card card-body">
+                            <label for="inputCity" class="form-label">Nombre</label>
+                            <input type="text" name='name' class="form-control" id="inputCity">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 collapse" id="collapseExample2">
+                        <div class="card card-body">
+                            <label for="inputState" class="form-label">Estatus</label>
+                            <select id="inputState" name='state' class="form-select">
+                                <option value="" selected disabled hidden> </option>
+                                <option value="A">Todo</option>
+                                <option value="B">In Progress</option>
+                                <option value="C">Done</option>
+                                <option value="D">Close</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 collapse" id="collapseExample3">
+                        <div class="card card-body">
+                            <label for="inputCity" class="form-label">Descripcion</label>
+                            <input type="text" name='description' class="form-control" id="inputCity">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col table-responsive">
+            <table class="table table-light">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">Nombre</th>
+                        <th scope="col" class="text-center">Descripcion</th>
+                        <th scope="col" class="text-center">Opcion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in object_list %}
+                    {% if view.now > item.date_expire|date:"Y-m-d" %} <tr class=" table-danger">
+                        {% else %}
+                    <tr>
+                        {% endif %}
+                        <td class="text-center">{{ item.name }}</td>
+                        <td class="text-center">{{ item.description }}</td>
+                        <td class="text-center"><a class="btn btn-secondary" href="/lista/{{ item.pk }}/"
+                                role="button">Editar</a>
+                            <a class="btn btn-danger" href="/lista/delete/{{ item.pk }}/" role="button">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
